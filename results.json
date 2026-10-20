@@ -1,0 +1,29 @@
+{
+  "question": "Does a class-balanced, CV-tuned RBF SVM on the full noisy, imbalanced training set beat an SVM trained on a PCA-curated subset of that set, on the public credit-g dataset?",
+  "method": "credit-g (OpenML 31) one-hot + standardised; stratified 75/25 split (seed 42); 10% training labels flipped (noise seeds 42-44); baseline drops 20% per class by PCA reconstruction error then default RBF SVM; improved = class_weight='balanced' RBF SVM with 5-fold stratified grid search on C and gamma; metric macro-F1 on clean test split.",
+  "dataset": {
+    "name": "credit-g (OpenML data_id 31)",
+    "source_url": "https://www.openml.org/d/31",
+    "n_rows": 1000,
+    "n_train": 750,
+    "n_test": 250,
+    "same_as_paper": false,
+    "baseline_is_papers_method": false
+  },
+  "metric_name": "macro-F1 (clean test set)",
+  "higher_is_better": true,
+  "baseline": "Within-class PCA reconstruction-error curation (drop 20% largest-error points per class, 90% variance PCA) followed by an RBF SVM with default C=1 and gamma='scale'.",
+  "improved": "RBF SVM on the full noisy training set with class_weight='balanced' and C, gamma chosen by 5-fold stratified grid search on noisy training labels only.",
+  "metrics": {
+    "baseline_score": 0.6408542697393834,
+    "baseline_score_std": 0.034613525786321556,
+    "baseline_accuracy": 0.7040000000000001,
+    "baseline_roc_auc": 0.7345777777777777,
+    "improved_score": 0.6809323952723444,
+    "improved_score_std": 0.011733000844101666,
+    "improved_accuracy": 0.6973333333333334,
+    "improved_roc_auc": 0.796063492063492,
+    "improvement": 0.04007812553296097
+  },
+  "notes": "Baseline is a stand-in for the paper's L1-PCA curation (L2-PCA proxy); not the paper's method or dataset. Only one stratified split (seed 42); variability reflects label-noise draws (seeds 42-44) only, std is population std over 3 runs. Neither model is randomised at fit time. Test set used once for final scoring. Class for PCA curation uses noisy labels, as in practice. Small test set (250 rows) means noisy macro-F1 estimates."
+}

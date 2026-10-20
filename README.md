@@ -18,6 +18,26 @@ python analysis.py
 
 Results: written to `results.json` (plus `figures/macro_f1_bar.png`).
 
+## Results (latest run)
+
+On the public credit-g dataset (250-row clean test split, 10% training-label noise), a standard PCA-reconstruction-error curation followed by an RBF SVM reached 64.1% macro-F1, while a class-balanced, CV-tuned RBF SVM on the full training set reached 68.1%, a modest gain of about 4 points.
+
+| Metric | Value |
+|---|---|
+| baseline_score | 0.6409 |
+| baseline_score_std | 0.03461 |
+| baseline_accuracy | 0.704 |
+| baseline_roc_auc | 0.7346 |
+| improved_score | 0.6809 |
+| improved_score_std | 0.01173 |
+| improved_accuracy | 0.6973 |
+| improved_roc_auc | 0.7961 |
+| improvement | 0.04008 |
+
+Run on 2026-10-20. Full output: [results.json](results.json) · [run.log](run.log)
+
+Notes: Baseline is a stand-in for the paper's L1-PCA curation (L2-PCA proxy); not the paper's method or dataset. Only one stratified split (seed 42); variability reflects label-noise draws (seeds 42-44) only, std is population std over 3 runs. Neither model is randomised at fit time. Test set used once for final scoring. Class for PCA curation uses noisy labels, as in practice. Small test set (250 rows) means noisy macro-F1 estimates.
+
 ## Reference
 
 This project is motivated by the following paper:
